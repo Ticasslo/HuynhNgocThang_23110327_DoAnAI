@@ -1,8 +1,6 @@
 # HuynhNgocThang_23110327_DoAnAI
 
-Đồ Án cá nhân môn Trí tuệ nhân tạo - HKII - 2024 - 2025
-
-# Đồ Án Cá Nhân Môn Trí Tuệ Nhân Tạo
+# Đồ Án Cá Nhân Môn Trí Tuệ Nhân Tạo - HKII - 2024 - 2025
 
 ## Huỳnh Ngọc Thắng - 23110327
 
@@ -207,18 +205,10 @@ Reinforcement Learning (RL) đặt **tác tử** (agent) vào một **môi trư�
 - **Value Function (V, Q)**: Ước lượng tổng phần thưởng kỳ vọng khi theo một policy từ trạng thái hoặc cặp (state, action).
 - **Model (tuỳ chọn)**: Mô tả xác suất chuyển trạng thái và phân phối phần thưởng (có trong MDP planning, không nhất thiết cho model-free RL).
 
-Kết quả mong đợi là tìm ra **policy\*** sao cho:
-\[
-\pi^\*(s) = \arg\max*a \mathbb{E}\bigl[\sum*{t=0}^\infty \gamma^t r\_{t+1} \mid s_0 = s, a_t = \pi(s_t)\bigr]
-\]
-
 ##### Nhận xét
 
 - **Q-Learning**:
-  - Là thuật toán model-free, học giá trị Q(s, a) thông qua cập nhật lặp:  
-    \[
-    Q(s,a) \leftarrow Q(s,a) + \alpha \bigl[r + \gamma \max_{a'} Q(s',a') - Q(s,a)\bigr].
-    \]
+  - Là thuật toán model-free, học giá trị Q(s, a) thông qua cập nhật lặp.
   - Ưu điểm: Không cần biết mô hình môi trường.
   - Hạn chế: Chậm hội tụ khi không gian trạng thái lớn—như 8-puzzle—và yêu cầu nhiều trải nghiệm.
     ![Ví dụ về thuật toán đang thực hiện](DoAnAICaNhan/Q-learning_time0_9959s_step31.gif)

@@ -701,7 +701,6 @@ def nondeterministic(batDau, dich, max_depth=35):
         results = [main_result] + alternative_results
         return results
     
-    # Cache để lưu các kết quả đã tính toán
     # Khóa: (state, depth), Giá trị: (success, plan)
     memo = {}
     
@@ -767,9 +766,6 @@ def nondeterministic(batDau, dich, max_depth=35):
         # Xây dựng kế hoạch: thêm state vào đầu subplan
         plan = [state] + subplan
         
-        # Điều chỉnh hành vi với mô phỏng AND-OR search cho 8-puzzle:
-        # Trong môi trường thực tế, ta cần phải xem xét tất cả các kết quả có thể
-        # Nhưng để đơn giản, đối với 8-puzzle chúng ta chỉ cần thành công với kết quả chính
         return (True, plan)
     
     # Bắt đầu tìm kiếm từ OR node
@@ -1357,13 +1353,11 @@ def min_conflicts(batDau, dich, max_steps=2000, max_restarts=5, record_process=T
         return final_path
 
 def taoTrangThaiNgauNhien():
-    """Tạo một trạng thái ngẫu nhiên cho 8-puzzle."""
     trangThai = list(range(9))
     random.shuffle(trangThai)
     return tuple(trangThai)
 
 def kiemTraCoTheGiai(trangThai):
-    """Kiểm tra xem một trạng thái 8-puzzle có thể giải được không."""
     # Tính số nghịch thế (inversion)
     inversion = 0
     for i in range(8):
@@ -1477,7 +1471,6 @@ def q_learning(batDau, dich, episodes=20000, alpha=0.2, gamma=0.95, epsilon=0.3)
     return path
 
 def timDuongDi(batDau, dich, Q):
-    """Tìm đường đi từ trạng thái bắt đầu đến đích sử dụng bảng Q"""
     path = [batDau]
     state = batDau
     visited = set([batDau])

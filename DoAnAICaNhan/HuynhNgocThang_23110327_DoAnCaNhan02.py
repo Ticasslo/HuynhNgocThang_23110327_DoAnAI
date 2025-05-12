@@ -15,8 +15,8 @@ import re
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from collections import defaultdict
-import numpy as np  # Thêm numpy để tạo màu cho biểu đồ
-import networkx as nx  # Thêm networkx để hiển thị đồ thị
+import numpy as np
+import networkx as nx
 
 CELL_SIZE = 95
 ANIMATION_STEPS = 10
@@ -29,11 +29,7 @@ def center_window(window, width, height):
     y = (screen_height - height) // 2 - 45
     window.geometry(f"{width}x{height}+{x}+{y}")
     
-    # Cố định cửa sổ, không cho thay đổi kích thước
     window.resizable(False, False)
-    
-    # Cấu hình cửa sổ để luôn ở trên các cửa sổ khác (tùy chọn)
-    # window.attributes("-topmost", True)
 
 class GiaoDien8Puzzle:
     def __init__(self, cuaSoChinh):
@@ -618,7 +614,6 @@ class GiaoDien8Puzzle:
         image = ImageGrab.grab(bbox=(x, y, x+canvas_width, y+canvas_height))
         self.frames.append(image)
         
-        # Debug info
         print(f"Captured frame at {x},{y} with size {canvas_width}x{canvas_height}")
 
     def save_gif(self):
@@ -662,7 +657,6 @@ class GiaoDien8Puzzle:
         self.frames = []  # Reset frames
 
     def moGiaoDienNoObservation(self):
-        # Tạo cửa sổ mới
         self.no_obs_window = tk.Toplevel(self.cuaSoChinh)
         self.no_obs_window.title("No Observation - Belief States")
         
@@ -760,11 +754,8 @@ class GiaoDien8Puzzle:
         # Hiển thị belief states ban đầu
         self.khoiTaoBeliefStates()
         
-        # Đặt cửa sổ ở trước cửa sổ chính
         self.no_obs_window.transient(self.cuaSoChinh)
         self.no_obs_window.grab_set()
-        
-        # Xử lý khi đóng cửa sổ
         self.no_obs_window.protocol("WM_DELETE_WINDOW", self.dongGiaoDienNoObservation)
 
     def dongGiaoDienNoObservation(self):
@@ -1170,7 +1161,6 @@ class GiaoDien8Puzzle:
         self.belief_info.config(state="disabled")
 
     def dungGiaiThuatToan(self):
-        """Dừng quá trình giải thuật toán và trở về trạng thái ban đầu"""
         if self.animationPlay:
             self.animationPlay = False
             
@@ -1202,7 +1192,6 @@ class GiaoDien8Puzzle:
                 self.record_status.config(text="Quay gif đã dừng")
 
     def moSoSanhThuatToan(self):
-        """Mở cửa sổ hiển thị biểu đồ so sánh các thuật toán"""
         # Đọc thông tin từ tên file GIF trong thư mục
         algo_stats = self.docThongTinTuGIF()
         
@@ -1210,19 +1199,14 @@ class GiaoDien8Puzzle:
             messagebox.showinfo("Thông báo", "Không tìm thấy file GIF để phân tích. Vui lòng chạy các thuật toán và quay GIF trước.")
             return
         
-        # Tạo cửa sổ mới
         so_sanh_window = tk.Toplevel(self.cuaSoChinh)
         so_sanh_window.title("So sánh thuật toán")
         so_sanh_window.resizable(False, False)
-        
-        # Căn giữa cửa sổ so sánh
         center_window(so_sanh_window, 1200, 700)
         
-        # Tạo frame để chứa biểu đồ
         frame = tk.Frame(so_sanh_window)
         frame.pack(fill=tk.BOTH, expand=True)
         
-        # Định nghĩa thứ tự thuật toán muốn hiển thị
         algorithm_order = [
             "BFS", "DFS", "IDFS", "UCS", "AStar", "IDAStar", "Greedy",
             "Simple HC", "Steepest HC", "Stochastic HC", "Simulated Annealing",
@@ -1241,19 +1225,14 @@ class GiaoDien8Puzzle:
         remaining_algos = [algo for algo in algo_stats.keys() if algo not in sorted_algos]
         sorted_algos.extend(remaining_algos)
         
-        # Tạo biểu đồ với matplotlib
         fig = plt.figure(figsize=(12, 10))
         
         # Biểu đồ thời gian
         ax1 = fig.add_subplot(211)
         times = [algo_stats[algo]['time'] for algo in sorted_algos]
         
-        # Tạo màu dựa trên số lượng thuật toán
         colors = plt.cm.viridis(np.linspace(0, 1, len(sorted_algos)))
-        
-        # Tăng width của các cột
         bar_width = 0.6
-        
         x_positions = np.arange(len(sorted_algos))
         
         bars1 = ax1.bar(x_positions, times, color=colors, width=bar_width)
@@ -1309,10 +1288,8 @@ class GiaoDien8Puzzle:
         so_sanh_window.protocol("WM_DELETE_WINDOW", close_window)
         
     def docThongTinTuGIF(self):
-        """Đọc thông tin thời gian và số bước từ tên file GIF trong thư mục hiện tại"""
         algo_stats = {}
         
-        # Pattern để trích xuất thông tin từ tên file
         # Ví dụ: BFS_time12_34s_step15.gif
         pattern = r'(.+)_time(.+)s_step(\d+)'
         
@@ -1343,7 +1320,6 @@ class GiaoDien8Puzzle:
             return {}
 
     def hienThiDoThiDuongDi(self):
-        """Hiển thị đồ thị đường đi của thuật toán hiện tại nếu có"""
         # Kiểm tra xem có đường đi nào không
         if not hasattr(self, 'txtSolution') or not self.txtSolution.get("1.0", tk.END).strip():
             messagebox.showinfo("Thông báo", "Chưa có đường đi nào để hiển thị. Vui lòng chạy một thuật toán trước.")
@@ -1372,22 +1348,17 @@ class GiaoDien8Puzzle:
         # Kiểm tra số lượng node để quyết định kiểu hiển thị
         num_nodes = len(duongDi)
         
-        # Tạo cửa sổ mới
         node_window = tk.Toplevel(self.cuaSoChinh)
         node_window.title("Đồ thị đường đi")
         node_window.resizable(False, False)
-        
-        # Căn giữa cửa sổ
         center_window(node_window, 1000, 800)
         
-        # Tạo đồ thị
         G = nx.DiGraph()
         
         # Thêm các node và cạnh
         for i in range(num_nodes-1):
             G.add_edge(str(i), str(i+1))
         
-        # Tạo subplot
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111)
         
@@ -1411,7 +1382,6 @@ class GiaoDien8Puzzle:
                 edge_color='black', linewidths=1, font_size=10, ax=ax, 
                 arrows=True, arrowstyle='-|>', arrowsize=15)
                 
-        # Thêm tiêu đề
         ax.set_title(f"Đồ thị đường đi ({num_nodes-1} bước)")
         
         # Hiển thị trạng thái ở mỗi node
@@ -1429,13 +1399,8 @@ class GiaoDien8Puzzle:
         nx.draw_networkx_labels(G, pos_attrs, labels=state_labels, font_size=7,  # Giảm font size từ 8 xuống 7
                               horizontalalignment='center', verticalalignment='top')
         
-        # Điều chỉnh giới hạn trục để hiển thị đầy đủ node
-        plt.axis('off')
-        
-        # Tăng khoảng trắng xung quanh để tránh cắt các nhãn
+        plt.axis('off')  
         ax.margins(0.2)
-        
-        # Đặt giới hạn để trục hoàn toàn có thể nhìn thấy
         ax.autoscale()
         
         # Tạo canvas để hiển thị trong Tkinter
@@ -1448,19 +1413,10 @@ class GiaoDien8Puzzle:
             plt.close(fig)  # Đóng figure để giải phóng bộ nhớ
             node_window.destroy()
             
-        # Xử lý sự kiện đóng cửa sổ
         node_window.protocol("WM_DELETE_WINDOW", close_node_window)
         
-        # Thêm nút để đóng cửa sổ
-        button_frame = tk.Frame(node_window)
-        button_frame.pack(pady=10)
-        
-        close_button = tk.Button(button_frame, text="Đóng", command=close_node_window,
-                               width=10, height=1, font=("Arial", 10))
-        close_button.pack()
 
     def format_state_for_display(self, state):
-        """Định dạng trạng thái 8-puzzle để hiển thị trong đồ thị"""
         if not state or len(state) != 9:
             return "Invalid"
             
@@ -1477,9 +1433,7 @@ if __name__ == "__main__":
     center_window(root, 800, 790)
     root.title("Các thuật toán giải 8-Puzzle")
     
-    # Xử lý sự kiện đóng cửa sổ
     def on_closing():
-        # Đảm bảo tất cả các cửa sổ matplotlib được đóng
         plt.close('all')
         
         # Hủy tất cả các tác vụ animation nếu có

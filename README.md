@@ -124,14 +124,15 @@ Nhờ heuristic, các thuật toán có thông tin định hướng giảm mạn
 
   - Hill Climbing là thuật toán tìm kiếm cục bộ đơn giản, liên tục cải thiện trạng thái hiện tại theo hướng tốt hơn, giống như leo lên đỉnh đồi.
 
-- Ưu điểm của Hill Climbing là triển khai đơn giản, tốc độ nhanh và tiết kiệm bộ nhớ vì chỉ cần lưu trữ trạng thái hiện tại và các trạng thái lân cận.
-- Nhược điểm lớn nhất là dễ bị kẹt ở cực tiểu cục bộ (local minimum), tức là những trạng thái mà tất cả láng giềng đều kém hơn nhưng chưa phải là đích. Trong bài toán 8-puzzle, các biến thể Hill Climbing thường không tìm được lời giải cho tất cả các trạng thái ban đầu.
-- Mỗi biến thể có ưu nhược điểm riêng:
-  1. Simple Hill Climbing nhanh nhất nhưng dễ bị kẹt nhất
-  2. Steepest Hill Climbing tìm được đường đi tốt hơn nhưng tốn thời gian hơn để xét tất cả láng giềng
-  3. Stochastic Hill Climbing có khả năng thoát khỏi một số cực tiểu cục bộ nhỏ nhờ yếu tố ngẫu nhiên
+  - Ưu điểm của Hill Climbing là triển khai đơn giản, tốc độ nhanh và tiết kiệm bộ nhớ vì chỉ cần lưu trữ trạng thái hiện tại và các trạng thái lân cận.
+  - Nhược điểm lớn nhất là dễ bị kẹt ở cực tiểu cục bộ (local minimum), tức là những trạng thái mà tất cả láng giềng đều kém hơn nhưng chưa phải là đích. Trong bài toán 8-puzzle, các biến thể Hill Climbing thường không tìm được lời giải cho tất cả các trạng thái ban đầu.
+  - Mỗi biến thể có ưu nhược điểm riêng:
+    1. Simple Hill Climbing nhanh nhất nhưng dễ bị kẹt nhất
+    2. Steepest Hill Climbing tìm được đường đi tốt hơn nhưng tốn thời gian hơn để xét tất cả láng giềng
+    3. Stochastic Hill Climbing có khả năng thoát khỏi một số cực tiểu cục bộ nhỏ nhờ yếu tố ngẫu nhiên
 
 - **Simulated Annealing**:
+
   - Simulated Annealing khắc phục nhược điểm của Hill Climbing bằng cách đôi khi chấp nhận trạng thái xấu hơn, giống như quá trình ủ kim loại.
   - Điểm đặc biệt của Simulated Annealing là xác suất chấp nhận trạng thái xấu hơn phụ thuộc vào:
   - Mức độ xấu đi (delta_E) - càng xấu đi nhiều, xác suất chấp nhận càng thấp
@@ -142,6 +143,7 @@ Nhờ heuristic, các thuật toán có thông tin định hướng giảm mạn
     ![Ví dụ về thuật toán đang thực hiện](<DoAnAICaNhan/Simulated Annealing_time0_0566s_step1709.gif>)
 
 - **Beam Search**:
+
   - Beam Search cân bằng giữa chiều rộng và chiều sâu bằng cách giữ lại một số lượng giới hạn trạng thái tốt nhất ở mỗi bước.
 
   - Giữ lại một số (beam width) trạng thái tốt nhất tại mỗi bước, kết hợp giữa breadth và depth.
@@ -150,7 +152,9 @@ Nhờ heuristic, các thuật toán có thông tin định hướng giảm mạn
     ![Ví dụ về thuật toán đang thực hiện](<DoAnAICaNhan/Beam Search_time0_0024s_step29.gif>)
 
 - **Genetic Algorithm**:
+
   - Thuật toán di truyền bao gồm nhiều bước quan trọng:
+
   1. Tạo quần thể ban đầu (create_initial_population): Tạo quần thể bằng cách thực hiện nhiều bước di chuyển ngẫu nhiên từ trạng thái ban đầu.
   2. Đánh giá độ thích nghi (calculate_fitness): Mỗi cá thể được đánh giá bằng hàm heuristic. Giá trị càng thấp càng tốt.
   3. Chọn cha mẹ (select_parents): Các cá thể có độ thích nghi tốt có cơ hội được chọn làm cha mẹ cao hơn.
@@ -185,7 +189,8 @@ Solution (kế hoạch) trong bối cảnh này thường là một **kế hoạ
 
 ##### Các thuật toán tiêu biểu
 
-- **Non deterministic**  
+- **Non deterministic**
+
   - Thuật toán Non Deterministic (AND-OR Graph Search) xử lý các môi trường không chắc chắn, nơi một hành động có thể dẫn đến nhiều kết quả khác nhau.
   - Đặc điểm quan trọng là hàm apply_action_with_uncertainty - nó mô phỏng một môi trường không xác định, nơi cùng một hành động có thể dẫn đến các kết quả khác nhau với xác suất nhất định. Trong code, hành động chính có 90% xác suất thành công, còn 10% là một kết quả khác.
 
@@ -193,11 +198,13 @@ Solution (kế hoạch) trong bối cảnh này thường là một **kế hoạ
   - Nhược điểm là độ phức tạp tính toán cao, đặc biệt khi số lượng kết quả có thể từ mỗi hành động tăng lên. Ngoài ra, nếu không kiểm soát độ sâu, thuật toán có thể chạy rất lâu hoặc không kết thúc.
 
   - Xây dựng cây AND-OR để biểu diễn cả lựa chọn hành động (OR) và sự phân nhánh do kết quả ngẫu nhiên hoặc quan sát khác nhau (AND).
-  ![Ví dụ về thuật toán đang thực hiện](<DoAnAICaNhan/Non Deterministic_time4_4385s_step35.gif>)
+    ![Ví dụ về thuật toán đang thực hiện](<DoAnAICaNhan/Non Deterministic_time4_4385s_step35.gif>)
 
-- **No Observation**  
+- **No Observation**
+
   - No Observation là thuật toán đặc biệt dành cho môi trường không có thông tin cảm biến - tác tử không biết mình đang ở trạng thái nào chính xác.
   - No Observation hoạt động theo những nguyên tắc sau:
+
   1. Duy trì một tập hợp các "belief states" - các trạng thái mà tác tử có thể đang ở
   2. Đánh giá các hành động dựa trên hiệu quả đối với tất cả belief states
   3. Áp dụng hành động được chọn cho tất cả belief states
@@ -209,9 +216,11 @@ Solution (kế hoạch) trong bối cảnh này thường là một **kế hoạ
   Áp dụng khi không có thông tin cảm biến, thuật toán dựa hoàn toàn vào mô hình chuyển đổi và cập nhật tập trạng thái có thể xảy ra.
   ![Ví dụ về thuật toán đang thực hiện](<DoAnAICaNhan/No Observation_time25_33s_step817.gif>)
 
-- **Search in Partially Observable Environments**  
+- **Search in Partially Observable Environments**
+
   - Thuật toán Partially Observable xử lý môi trường chỉ quan sát được một phần - tác tử chỉ thấy được ô trống và các ô kề với nó.
   - Trong thuật toán này, hai hàm quan trọng nhất là:
+
   1. get_observation: Xác định những ô nào có thể quan sát được từ trạng thái hiện tại (ô trống và các ô kề)
   2. po_heuristic: Đánh giá trạng thái dựa trên thông tin có giới hạn - chỉ tính khoảng cách Manhattan cho các ô quan sát được
 
@@ -245,6 +254,7 @@ Trong CSP, bài toán được mô hình hóa bằng cách gán giá trị cho c
     ![Ví dụ về thuật toán đang thực hiện](DoAnAICaNhan/Backtracking_time10_4318s_step29.gif)
 
 - **Backtracking with Forward-Checking**
+
   - Điểm khác biệt quan trọng so với Backtracking thông thường là hàm is_promising, thực hiện "forward checking" (kiểm tra chuyển tiếp). Hàm này đánh giá xem một trạng thái có triển vọng dẫn đến đích không:
 
   - Mở rộng Backtracking và ngay lập tức loại bỏ các giá trị trong miền của biến chưa gán mà sẽ vi phạm ràng buộc, giảm mức độ quay lui.
@@ -252,15 +262,18 @@ Trong CSP, bài toán được mô hình hóa bằng cách gán giá trị cho c
     ![Ví dụ về thuật toán đang thực hiện](<DoAnAICaNhan/Backtracking with FC_time0_5146s_step29.gif>)
 
 - **Min-Conflicts**
+
   - Min Conflicts là thuật toán CSP cục bộ, bắt đầu với trạng thái bất kỳ và liên tục điều chỉnh để giảm xung đột.
   - Min Conflicts hoạt động theo nguyên tắc:
+
   1. Bắt đầu với một trạng thái bất kỳ
   2. Lặp lại cho đến khi đạt đích hoặc đạt số bước tối đa:
-  a. Tìm vị trí ô trống hiện tại
-  b. Xác định các di chuyển có thể (lên, xuống, trái, phải)
-  c. Đánh giá số xung đột sau mỗi di chuyển
-  d. Chọn di chuyển dẫn đến ít xung đột nhất
-  e. Thực hiện di chuyển đó
+     a. Tìm vị trí ô trống hiện tại
+     b. Xác định các di chuyển có thể (lên, xuống, trái, phải)
+     c. Đánh giá số xung đột sau mỗi di chuyển
+     d. Chọn di chuyển dẫn đến ít xung đột nhất
+     e. Thực hiện di chuyển đó
+
   - Trong bài toán 8-puzzle, "xung đột" được định nghĩa thông qua hàm heuristic - số ô không đúng vị trí hoặc tổng khoảng cách Manhattan.
 
   - Thuật toán thuần local search: khởi tạo gán ngẫu nhiên, sau đó liên tục điều chỉnh biến vi phạm nhiều ràng buộc nhất.
@@ -288,6 +301,7 @@ Reinforcement Learning (RL) đặt **tác tử** (agent) vào một **môi trư�
 ##### Nhận xét
 
 - **Q-Learning**:
+
   - Q-Learning là thuật toán học tăng cường, giúp tác tử học cách hành động tối ưu qua nhiều lần tương tác với môi trường.
 
   - Là thuật toán model-free, học giá trị Q(s, a) thông qua cập nhật lặp.

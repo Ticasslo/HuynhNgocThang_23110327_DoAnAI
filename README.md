@@ -35,32 +35,36 @@ Một **bài toán tìm kiếm** trong Trí tuệ Nhân tạo thường bao gồ
 ##### Nhận xét
 
 - **BFS (Breadth-First Search):**
-  BFS hoạt động bằng cách duyệt các trạng thái theo từng lớp, từ gần đến xa, giống như các gợn sóng lan tỏa từ một điểm
+
+  - BFS hoạt động bằng cách duyệt các trạng thái theo từng lớp, từ gần đến xa, giống như các gợn sóng lan tỏa từ một điểm
 
   - Ưu điểm: Luôn tìm ra đường đi ngắn nhất (theo số bước).
   - Nhược điểm: Tốn nhiều bộ nhớ và thời gian khi số lượng trạng thái tăng cao.
     ![Ví dụ về thuật toán đang thực hiện](DoAnAICaNhan/BFS_time0_8235s_step23.gif)
 
 - **DFS (Depth-First Search):**
-  DFS hoạt động theo nguyên tắc ngược lại với BFS - nó ưu tiên duyệt theo chiều sâu nhất có thể trước khi quay lui
-  Điểm quan trọng là chúng ta sử dụng một ngăn xếp (stack) và lấy phần tử cuối cùng ra (LIFO - Last In First Out), khác với BFS. Điều này làm cho DFS đi sâu xuống một nhánh tìm kiếm trước khi thử các nhánh khác.
-  Trong bài toán 8-puzzle, DFS thường kém hiệu quả hơn các thuật toán khác vì không gian trạng thái khá rộng, nhưng nhiều nhánh không dẫn đến đích.
+
+  - DFS hoạt động theo nguyên tắc ngược lại với BFS - nó ưu tiên duyệt theo chiều sâu nhất có thể trước khi quay lui
+  - Điểm quan trọng là chúng ta sử dụng một ngăn xếp (stack) và lấy phần tử cuối cùng ra (LIFO - Last In First Out), khác với BFS. Điều này làm cho DFS đi sâu xuống một nhánh tìm kiếm trước khi thử các nhánh khác.
+  - Trong bài toán 8-puzzle, DFS thường kém hiệu quả hơn các thuật toán khác vì không gian trạng thái khá rộng, nhưng nhiều nhánh không dẫn đến đích.
 
   - Ưu điểm: Dùng ít bộ nhớ, dễ triển khai.
   - Nhược điểm: Dễ mắc kẹt trong vòng lặp, không đảm bảo tối ưu, kém hiệu quả trên không gian lớn như 8-puzzle.
     ![Ví dụ về thuật toán đang thực hiện](DoAnAICaNhan/DFS_time0_0583s_step7113.gif)
 
 - **IDFS (Iterative Deepening DFS):**
-  IDFS thực hiện DFS với độ sâu giới hạn tăng dần, giúp vừa tìm được lời giải ngắn nhất như BFS, vừa tiết kiệm bộ nhớ như DF
-  IDFS có hai thành phần chính: Hàm dfsGioiHan thực hiện DFS với giới hạn độ sâu cho trước, vòng lặp bên ngoài tăng dần độ sâu giới hạn từ 1 đến giới hạn tối đa
+
+  - IDFS thực hiện DFS với độ sâu giới hạn tăng dần, giúp vừa tìm được lời giải ngắn nhất như BFS, vừa tiết kiệm bộ nhớ như DFS
+  - IDFS có hai thành phần chính: Hàm dfsGioiHan thực hiện DFS với giới hạn độ sâu cho trước, vòng lặp bên ngoài tăng dần độ sâu giới hạn từ 1 đến giới hạn tối đa
 
   - Ưu điểm: Kết hợp ưu điểm của DFS (thấp bộ nhớ) và BFS (tìm ngắn nhất về số bước).
   - Nhược điểm: Phải lặp lại nhiều lần, thường chậm hơn khi không dùng heuristic.
     ![Ví dụ về thuật toán đang thực hiện](DoAnAICaNhan/IDFS_time1_0643s_step27.gif)
 
 - **UCS (Uniform-Cost Search):**
-  Thuật toán UCS - Uniform-Cost Search là phiên bản tổng quát hơn của BFS, xét đến chi phí thực của đường đi.
-  Điểm đặc biệt của UCS là sử dụng hàng đợi ưu tiên (priority queue) thay vì hàng đợi thông thường. Mỗi phần tử trong hàng đợi bao gồm (chi phí, trạng thái, đường đi), và thuật toán luôn lấy ra phần tử có chi phí thấp nhất để xét tiếp.
+
+  - Thuật toán UCS - Uniform-Cost Search là phiên bản tổng quát hơn của BFS, xét đến chi phí thực của đường đi.
+  - Điểm đặc biệt của UCS là sử dụng hàng đợi ưu tiên (priority queue) thay vì hàng đợi thông thường. Mỗi phần tử trong hàng đợi bao gồm (chi phí, trạng thái, đường đi), và thuật toán luôn lấy ra phần tử có chi phí thấp nhất để xét tiếp.
 
   - Ưu điểm: Xét chi phí thực, đảm bảo tìm giải pháp ít tốn kém nhất.
   - Nhược điểm: Tương tự BFS, khả năng bùng nổ tổ hợp lớn, chậm với bài toán 8-puzzle.
@@ -76,28 +80,32 @@ Khi có thêm **thông tin định hướng** (heuristic), các thuật toán t�
 ##### Nhận xét
 
 - **Greedy Best-First Search**
-  Thuật toán Greedy Best-First Search là bước đầu tiên khi chúng ta đưa thông tin heuristic vào quá trình tìm kiếm.
-  Greedy chỉ xét heuristic (h(n)) - chính là ước lượng khoảng cách đến đích - mà không quan tâm đến chi phí đã bỏ ra.
+
+  - Thuật toán Greedy Best-First Search là bước đầu tiên khi chúng ta đưa thông tin heuristic vào quá trình tìm kiếm.
+  - Greedy chỉ xét heuristic (h(n)) - chính là ước lượng khoảng cách đến đích - mà không quan tâm đến chi phí đã bỏ ra.
 
   - Chỉ dựa vào heuristic \(h(n)\) để chọn nốt mở rộng tiếp theo, ưu tiên nhanh “cảm giác” gần mục tiêu.
   - Tuy đạt tốc độ cao, Greedy dễ mắc kẹt tại cực tiểu cục bộ và không đảm bảo tối ưu.
     ![Ví dụ về thuật toán đang thực hiện](DoAnAICaNhan/Greedy_time0_0135s_step79.gif)
 
 - **A\***
-  A* là thuật toán tìm kiếm có thông tin nổi tiếng nhất, kết hợp hoàn hảo giữa chi phí đã đi (g(n)) và ước lượng chi phí còn lại (h(n)).
-  Điểm khác biệt quan trọng với Greedy là A* cân nhắc cả chi phí đã đi (g) và ước lượng còn lại (h). Ngoài ra, A\* còn có cơ chế "tái mở": nếu tìm được đường đi tốt hơn đến một trạng thái (g_moi < daDuyet[trangThaiKe]), sẽ cập nhật và xét lại trạng thái đó.
+
+  - A\* là thuật toán tìm kiếm có thông tin nổi tiếng nhất, kết hợp hoàn hảo giữa chi phí đã đi (g(n)) và ước lượng chi phí còn lại (h(n)).
+  - Điểm khác biệt quan trọng với Greedy là A\* cân nhắc cả chi phí đã đi (g) và ước lượng còn lại (h). Ngoài ra, A\* còn có cơ chế "tái mở": nếu tìm được đường đi tốt hơn đến một trạng thái (g_moi < daDuyet[trangThaiKe]), sẽ cập nhật và xét lại trạng thái đó.
 
   - Kết hợp chi phí đường đi \(g(n)\) và ước lượng còn lại \(h(n)\) để đánh giá \(f(n) = g(n) + h(n)\).
   - Với heuristic nhất quán, A\* đảm bảo tìm ra lời giải ngắn nhất (theo chi phí) và thường là phương pháp hiệu quả nhất cho 8-puzzle.
     ![Ví dụ về thuật toán đang thực hiện](DoAnAICaNhan/AStar_time0_0190s_step23.gif)
 
 - **IDA\***
-  IDA* (Iterative Deepening A) kết hợp ý tưởng của IDFS và A, giải quyết vấn đề bộ nhớ của A.
-  IDA* hoạt động bằng cách:
-  1 - Bắt đầu với ngưỡng f ban đầu là giá trị heuristic của trạng thái xuất phát
-  2 - Thực hiện tìm kiếm theo chiều sâu, nhưng cắt tỉa các nhánh có f > bound
-  3 - Nếu không tìm thấy đích, tăng ngưỡng lên giá trị f nhỏ nhất vượt ngưỡng hiện tại
-  4 - Lặp lại cho đến khi tìm thấy đích hoặc xác định không có lời giải
+
+  - IDA\* (Iterative Deepening A) kết hợp ý tưởng của IDFS và A\*, giải quyết vấn đề bộ nhớ của A\*.
+  - IDA\* hoạt động bằng cách:
+
+  1. Bắt đầu với ngưỡng f ban đầu là giá trị heuristic của trạng thái xuất phát
+  2. Thực hiện tìm kiếm theo chiều sâu, nhưng cắt tỉa các nhánh có f > bound
+  3. Nếu không tìm thấy đích, tăng ngưỡng lên giá trị f nhỏ nhất vượt ngưỡng hiện tại
+  4. Lặp lại cho đến khi tìm thấy đích hoặc xác định không có lời giải
 
   - Phiên bản cải tiến của A\*, kết hợp iterative deepening với chỉ số ngưỡng \(f\).
   - Giữ nguyên tính tối ưu, tiết kiệm bộ nhớ hơn A\* nhưng có thể tăng số lần duyệt lại và kéo dài thời gian chạy.
@@ -113,27 +121,28 @@ Nhờ heuristic, các thuật toán có thông tin định hướng giảm mạn
 #### _Nhận xét:_
 
 - **Hill Climbing** (Steepest Ascent, Simple, Stochastic):
-  Hill Climbing là thuật toán tìm kiếm cục bộ đơn giản, liên tục cải thiện trạng thái hiện tại theo hướng tốt hơn, giống như leo lên đỉnh đồi.
+
+  - Hill Climbing là thuật toán tìm kiếm cục bộ đơn giản, liên tục cải thiện trạng thái hiện tại theo hướng tốt hơn, giống như leo lên đỉnh đồi.
 
 - Ưu điểm của Hill Climbing là triển khai đơn giản, tốc độ nhanh và tiết kiệm bộ nhớ vì chỉ cần lưu trữ trạng thái hiện tại và các trạng thái lân cận.
 - Nhược điểm lớn nhất là dễ bị kẹt ở cực tiểu cục bộ (local minimum), tức là những trạng thái mà tất cả láng giềng đều kém hơn nhưng chưa phải là đích. Trong bài toán 8-puzzle, các biến thể Hill Climbing thường không tìm được lời giải cho tất cả các trạng thái ban đầu.
 - Mỗi biến thể có ưu nhược điểm riêng:
-  Simple Hill Climbing nhanh nhất nhưng dễ bị kẹt nhất
-  Steepest Hill Climbing tìm được đường đi tốt hơn nhưng tốn thời gian hơn để xét tất cả láng giềng
-  Stochastic Hill Climbing có khả năng thoát khỏi một số cực tiểu cục bộ nhỏ nhờ yếu tố ngẫu nhiên
+  1. Simple Hill Climbing nhanh nhất nhưng dễ bị kẹt nhất
+  2. Steepest Hill Climbing tìm được đường đi tốt hơn nhưng tốn thời gian hơn để xét tất cả láng giềng
+  3. Stochastic Hill Climbing có khả năng thoát khỏi một số cực tiểu cục bộ nhỏ nhờ yếu tố ngẫu nhiên
 
 - **Simulated Annealing**:
-  Simulated Annealing khắc phục nhược điểm của Hill Climbing bằng cách đôi khi chấp nhận trạng thái xấu hơn, giống như quá trình ủ kim loại.
-  Điểm đặc biệt của Simulated Annealing là xác suất chấp nhận trạng thái xấu hơn phụ thuộc vào:
-  Mức độ xấu đi (delta_E) - càng xấu đi nhiều, xác suất chấp nhận càng thấp
-  Nhiệt độ (T) - khi mới bắt đầu (T cao), thuật toán sẵn sàng thử các hướng đi khác nhau; khi gần kết thúc (T thấp), thuật toán gần như chỉ chấp nhận cải thiện
+  - Simulated Annealing khắc phục nhược điểm của Hill Climbing bằng cách đôi khi chấp nhận trạng thái xấu hơn, giống như quá trình ủ kim loại.
+  - Điểm đặc biệt của Simulated Annealing là xác suất chấp nhận trạng thái xấu hơn phụ thuộc vào:
+  - Mức độ xấu đi (delta_E) - càng xấu đi nhiều, xác suất chấp nhận càng thấp
+  - Nhiệt độ (T) - khi mới bắt đầu (T cao), thuật toán sẵn sàng thử các hướng đi khác nhau; khi gần kết thúc (T thấp), thuật toán gần như chỉ chấp nhận cải thiện
 
   - Ưu điểm: Khả năng tìm kiếm toàn cục tốt hơn hill climbing.
   - Nhược điểm: Cần xác định lịch làm nguội (cooling schedule) hợp lý, độ phức tạp tính toán tăng.
     ![Ví dụ về thuật toán đang thực hiện](<DoAnAICaNhan/Simulated Annealing_time0_0566s_step1709.gif>)
 
 - **Beam Search**:
-  Beam Search cân bằng giữa chiều rộng và chiều sâu bằng cách giữ lại một số lượng giới hạn trạng thái tốt nhất ở mỗi bước.
+  - Beam Search cân bằng giữa chiều rộng và chiều sâu bằng cách giữ lại một số lượng giới hạn trạng thái tốt nhất ở mỗi bước.
 
   - Giữ lại một số (beam width) trạng thái tốt nhất tại mỗi bước, kết hợp giữa breadth và depth.
   - Ưu điểm: Cân bằng bộ nhớ và tốc độ, linh hoạt chọn beam width.
@@ -141,13 +150,13 @@ Nhờ heuristic, các thuật toán có thông tin định hướng giảm mạn
     ![Ví dụ về thuật toán đang thực hiện](<DoAnAICaNhan/Beam Search_time0_0024s_step29.gif>)
 
 - **Genetic Algorithm**:
-  Thuật toán di truyền bao gồm nhiều bước quan trọng:
-  Tạo quần thể ban đầu (create_initial_population): Tạo quần thể bằng cách thực hiện nhiều bước di chuyển ngẫu nhiên từ trạng thái ban đầu.
-  Đánh giá độ thích nghi (calculate_fitness): Mỗi cá thể được đánh giá bằng hàm heuristic. Giá trị càng thấp càng tốt.
-  Chọn cha mẹ (select_parents): Các cá thể có độ thích nghi tốt có cơ hội được chọn làm cha mẹ cao hơn.
-  Lai ghép (crossover): Tạo con mới bằng cách kết hợp thông tin từ hai cha mẹ.
-  Đột biến (mutate): Đôi khi biến đổi ngẫu nhiên một cá thể để tạo đa dạng di truyền.
-  Tiến hóa qua các thế hệ (create_new_generation): Thuật toán giữ lại một số cá thể tốt nhất (elite) và tạo cá thể mới qua lai ghép, đột biến.
+  - Thuật toán di truyền bao gồm nhiều bước quan trọng:
+  1. Tạo quần thể ban đầu (create_initial_population): Tạo quần thể bằng cách thực hiện nhiều bước di chuyển ngẫu nhiên từ trạng thái ban đầu.
+  2. Đánh giá độ thích nghi (calculate_fitness): Mỗi cá thể được đánh giá bằng hàm heuristic. Giá trị càng thấp càng tốt.
+  3. Chọn cha mẹ (select_parents): Các cá thể có độ thích nghi tốt có cơ hội được chọn làm cha mẹ cao hơn.
+  4. Lai ghép (crossover): Tạo con mới bằng cách kết hợp thông tin từ hai cha mẹ.
+  5. Đột biến (mutate): Đôi khi biến đổi ngẫu nhiên một cá thể để tạo đa dạng di truyền.
+  6. Tiến hóa qua các thế hệ (create_new_generation): Thuật toán giữ lại một số cá thể tốt nhất (elite) và tạo cá thể mới qua lai ghép, đột biến.
 
   - Dựa trên cơ chế di truyền học: khởi tạo quần thể, lai ghép, đột biến và chọn lọc.
   - Ưu điểm: Tìm lời giải đa dạng, dễ điều chỉnh cho không gian lớn.
@@ -177,22 +186,22 @@ Solution (kế hoạch) trong bối cảnh này thường là một **kế hoạ
 ##### Các thuật toán tiêu biểu
 
 - **Non deterministic**  
-  Thuật toán Non Deterministic (AND-OR Graph Search) xử lý các môi trường không chắc chắn, nơi một hành động có thể dẫn đến nhiều kết quả khác nhau.
-  Đặc điểm quan trọng là hàm apply_action_with_uncertainty - nó mô phỏng một môi trường không xác định, nơi cùng một hành động có thể dẫn đến các kết quả khác nhau với xác suất nhất định. Trong code, hành động chính có 90% xác suất thành công, còn 10% là một kết quả khác.
+  - Thuật toán Non Deterministic (AND-OR Graph Search) xử lý các môi trường không chắc chắn, nơi một hành động có thể dẫn đến nhiều kết quả khác nhau.
+  - Đặc điểm quan trọng là hàm apply_action_with_uncertainty - nó mô phỏng một môi trường không xác định, nơi cùng một hành động có thể dẫn đến các kết quả khác nhau với xác suất nhất định. Trong code, hành động chính có 90% xác suất thành công, còn 10% là một kết quả khác.
 
   - Ưu điểm của thuật toán này là có thể xử lý môi trường không chắc chắn, tìm ra kế hoạch đủ mạnh để đạt đích bất kể kết quả nào xảy ra. Đây là một bước tiến quan trọng so với các thuật toán thông thường vốn giả định môi trường xác định.
   - Nhược điểm là độ phức tạp tính toán cao, đặc biệt khi số lượng kết quả có thể từ mỗi hành động tăng lên. Ngoài ra, nếu không kiểm soát độ sâu, thuật toán có thể chạy rất lâu hoặc không kết thúc.
 
-  Xây dựng cây AND-OR để biểu diễn cả lựa chọn hành động (OR) và sự phân nhánh do kết quả ngẫu nhiên hoặc quan sát khác nhau (AND).
+  - Xây dựng cây AND-OR để biểu diễn cả lựa chọn hành động (OR) và sự phân nhánh do kết quả ngẫu nhiên hoặc quan sát khác nhau (AND).
   ![Ví dụ về thuật toán đang thực hiện](<DoAnAICaNhan/Non Deterministic_time4_4385s_step35.gif>)
 
 - **No Observation**  
-  No Observation là thuật toán đặc biệt dành cho môi trường không có thông tin cảm biến - tác tử không biết mình đang ở trạng thái nào chính xác.
-  No Observation hoạt động theo những nguyên tắc sau:
-  Duy trì một tập hợp các "belief states" - các trạng thái mà tác tử có thể đang ở
-  Đánh giá các hành động dựa trên hiệu quả đối với tất cả belief states
-  Áp dụng hành động được chọn cho tất cả belief states
-  Liên tục cập nhật tập belief cho đến khi tất cả đều đạt đích hoặc xác định không thể giải
+  - No Observation là thuật toán đặc biệt dành cho môi trường không có thông tin cảm biến - tác tử không biết mình đang ở trạng thái nào chính xác.
+  - No Observation hoạt động theo những nguyên tắc sau:
+  1. Duy trì một tập hợp các "belief states" - các trạng thái mà tác tử có thể đang ở
+  2. Đánh giá các hành động dựa trên hiệu quả đối với tất cả belief states
+  3. Áp dụng hành động được chọn cho tất cả belief states
+  4. Liên tục cập nhật tập belief cho đến khi tất cả đều đạt đích hoặc xác định không thể giải
 
   - Ưu điểm của thuật toán này là có thể giải quyết bài toán ngay cả khi không biết trạng thái chính xác, sử dụng thông tin từ quá khứ (hành động đã thực hiện) để đưa ra quyết định.
   - Nhược điểm là tốn nhiều tài nguyên tính toán để duy trì và cập nhật tất cả các belief states, và có thể không tìm được lời giải nếu các belief states quá khác biệt.
@@ -201,10 +210,10 @@ Solution (kế hoạch) trong bối cảnh này thường là một **kế hoạ
   ![Ví dụ về thuật toán đang thực hiện](<DoAnAICaNhan/No Observation_time25_33s_step817.gif>)
 
 - **Search in Partially Observable Environments**  
-  Thuật toán Partially Observable xử lý môi trường chỉ quan sát được một phần - tác tử chỉ thấy được ô trống và các ô kề với nó.
-  Trong thuật toán này, hai hàm quan trọng nhất là:
-  get_observation: Xác định những ô nào có thể quan sát được từ trạng thái hiện tại (ô trống và các ô kề)
-  po_heuristic: Đánh giá trạng thái dựa trên thông tin có giới hạn - chỉ tính khoảng cách Manhattan cho các ô quan sát được
+  - Thuật toán Partially Observable xử lý môi trường chỉ quan sát được một phần - tác tử chỉ thấy được ô trống và các ô kề với nó.
+  - Trong thuật toán này, hai hàm quan trọng nhất là:
+  1. get_observation: Xác định những ô nào có thể quan sát được từ trạng thái hiện tại (ô trống và các ô kề)
+  2. po_heuristic: Đánh giá trạng thái dựa trên thông tin có giới hạn - chỉ tính khoảng cách Manhattan cho các ô quan sát được
 
   - Ưu điểm của thuật toán này là có thể hoạt động trong môi trường chỉ quan sát được một phần, phù hợp với nhiều bài toán thực tế.
   - Nhược điểm là khó đảm bảo tìm được đường đi tối ưu và có thể gặp khó khăn khi không gian trạng thái lớn, vì thông tin hạn chế có thể dẫn đến quyết định không tối ưu.
@@ -236,23 +245,23 @@ Trong CSP, bài toán được mô hình hóa bằng cách gán giá trị cho c
     ![Ví dụ về thuật toán đang thực hiện](DoAnAICaNhan/Backtracking_time10_4318s_step29.gif)
 
 - **Backtracking with Forward-Checking**
-  Điểm khác biệt quan trọng so với Backtracking thông thường là hàm is_promising, thực hiện "forward checking" (kiểm tra chuyển tiếp). Hàm này đánh giá xem một trạng thái có triển vọng dẫn đến đích không:
+  - Điểm khác biệt quan trọng so với Backtracking thông thường là hàm is_promising, thực hiện "forward checking" (kiểm tra chuyển tiếp). Hàm này đánh giá xem một trạng thái có triển vọng dẫn đến đích không:
 
   - Mở rộng Backtracking và ngay lập tức loại bỏ các giá trị trong miền của biến chưa gán mà sẽ vi phạm ràng buộc, giảm mức độ quay lui.
   - Cải thiện hiệu suất so với Backtracking thuần túy, nhưng vẫn kém với các bài toán lớn như 8-puzzle.
     ![Ví dụ về thuật toán đang thực hiện](<DoAnAICaNhan/Backtracking with FC_time0_5146s_step29.gif>)
 
 - **Min-Conflicts**
-  Min Conflicts là thuật toán CSP cục bộ, bắt đầu với trạng thái bất kỳ và liên tục điều chỉnh để giảm xung đột.
-  Min Conflicts hoạt động theo nguyên tắc:
-  Bắt đầu với một trạng thái bất kỳ
-  Lặp lại cho đến khi đạt đích hoặc đạt số bước tối đa:
+  - Min Conflicts là thuật toán CSP cục bộ, bắt đầu với trạng thái bất kỳ và liên tục điều chỉnh để giảm xung đột.
+  - Min Conflicts hoạt động theo nguyên tắc:
+  1. Bắt đầu với một trạng thái bất kỳ
+  2. Lặp lại cho đến khi đạt đích hoặc đạt số bước tối đa:
   a. Tìm vị trí ô trống hiện tại
   b. Xác định các di chuyển có thể (lên, xuống, trái, phải)
   c. Đánh giá số xung đột sau mỗi di chuyển
   d. Chọn di chuyển dẫn đến ít xung đột nhất
   e. Thực hiện di chuyển đó
-  Trong bài toán 8-puzzle, "xung đột" được định nghĩa thông qua hàm heuristic - số ô không đúng vị trí hoặc tổng khoảng cách Manhattan.
+  - Trong bài toán 8-puzzle, "xung đột" được định nghĩa thông qua hàm heuristic - số ô không đúng vị trí hoặc tổng khoảng cách Manhattan.
 
   - Thuật toán thuần local search: khởi tạo gán ngẫu nhiên, sau đó liên tục điều chỉnh biến vi phạm nhiều ràng buộc nhất.
   - Phù hợp với CSP mật độ thưa và không ưu cầu tối ưu toàn cục; ít hiệu quả với 8-puzzle đòi hỏi lời giải tối ưu.
@@ -279,7 +288,7 @@ Reinforcement Learning (RL) đặt **tác tử** (agent) vào một **môi trư�
 ##### Nhận xét
 
 - **Q-Learning**:
-  Q-Learning là thuật toán học tăng cường, giúp tác tử học cách hành động tối ưu qua nhiều lần tương tác với môi trường.
+  - Q-Learning là thuật toán học tăng cường, giúp tác tử học cách hành động tối ưu qua nhiều lần tương tác với môi trường.
 
   - Là thuật toán model-free, học giá trị Q(s, a) thông qua cập nhật lặp.
   - Ưu điểm: Không cần biết mô hình môi trường.

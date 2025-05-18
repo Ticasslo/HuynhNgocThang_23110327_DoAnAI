@@ -27,6 +27,13 @@ def layTrangThaiKe(trangThai):
 
     return danhSachKe
 
+def truyVetDuongDi(cha, batDau, dich):
+    duongDi = [dich]
+    while duongDi[-1] != batDau:
+        duongDi.append(cha[duongDi[-1]])
+    duongDi.reverse()
+    return duongDi
+
 def bfs(batDau, dich):
     if batDau == dich:
         return [batDau]
@@ -177,7 +184,6 @@ def a_sao(batDau, dich):
 
     # Min-heap lưu (f(n), state)
     openSet = [(f[batDau], batDau)]
-    # Để tránh mở rộng lại
     dong = set()  # closed set
     cha = {batDau: None}
 
@@ -210,7 +216,7 @@ def ida_sao(batDau, dich):
     hoặc None nếu không có
     """
 
-    # Biến toàn cục để lưu cha (backtrack)
+    # Biến toàn cục để lưu cha
     cha = {}
     cha[batDau] = None
 
@@ -474,10 +480,6 @@ def genetic_algorithm(batDau, dich, population_size=100, generations=50, mutatio
     6. Lặp lại cho tới khi tìm được lời giải hoặc đạt số thế hệ tối đa
     """
     
-    # Hàm tính điểm fitness (thấp hơn là tốt hơn)
-    def calculate_fitness(state):
-        return heuristic(state, dich)
-    
     # Bước 1: Tạo quần thể ban đầu
     def create_initial_population():
         population = [batDau]
@@ -496,6 +498,10 @@ def genetic_algorithm(batDau, dich, population_size=100, generations=50, mutatio
                 population.append(current)
                 
         return population
+    
+    # Bước 2: Hàm tính điểm fitness (thấp hơn là tốt hơn)
+    def calculate_fitness(state):
+        return heuristic(state, dich)
     
     # Bước 3: Chọn cha mẹ để lai ghép dựa trên độ thích nghi
     def select_parents(population, fitness_scores):
@@ -774,11 +780,7 @@ def nondeterministic(batDau, dich, max_depth=35):
 
 def no_observation(batDau, dich, max_depth=35):
     """
-    Thuật toán Belief State Search cải tiến cho bài toán 8-puzzle.
-    
-    Trong 8-puzzle, môi trường là xác định (deterministic) và hoàn toàn quan sát được,
-    nên belief state chỉ chứa một trạng thái duy nhất. Tuy nhiên, chúng ta vẫn 
-    triển khai theo dạng tổng quát để có thể mở rộng sau này.
+    Thuật toán Belief State Search cho bài toán 8-puzzle.
     
     batDau: trạng thái ban đầu (tuple)
     dich: trạng thái đích mong muốn (tuple)
@@ -1515,13 +1517,6 @@ def timDuongDi(batDau, dich, Q):
         return None
 
     return path
-
-def truyVetDuongDi(cha, batDau, dich):
-    duongDi = [dich]
-    while duongDi[-1] != batDau:
-        duongDi.append(cha[duongDi[-1]])
-    duongDi.reverse()
-    return duongDi
 
 if __name__ == "__main__":
     trangThaiBatDau = (2, 6, 5,

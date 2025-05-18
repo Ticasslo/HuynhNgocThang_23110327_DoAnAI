@@ -832,17 +832,21 @@ class GiaoDien8Puzzle:
         if not self.auto_run:
             return
         
-        # Nếu ít nhất một belief state đạt đích, dừng lại
-        any_reached_goal = any(self.belief_goal_reached)
-        
-        if any_reached_goal:
-            # Dừng tự động chạy có belief state đạt đích
-            self.auto_run = False
-            self.auto_button.config(text="Tự động chạy", bg="#fff0e0")
-            return
+        # Lưu lại số lượng belief state đã đạt đích trước khi chạy bước này
+        previous_goal_count = sum(self.belief_goal_reached)
         
         # Thực hiện bước tiếp theo
         self.buocTiepNoObservation()
+        
+        # Đếm số lượng belief state đạt đích sau khi chạy
+        current_goal_count = sum(self.belief_goal_reached)
+        
+        # Nếu số lượng belief state đạt đích tăng lên (tìm thấy thêm một đích mới)
+        if current_goal_count > previous_goal_count:
+            # Dừng tự động chạy khi tìm thấy thêm belief state đạt đích mới
+            self.auto_run = False
+            self.auto_button.config(text="Tự động chạy", bg="#fff0e0")
+            return
         
         # Lên lịch thực hiện bước tiếp theo
         delay = self.auto_speed.get()
